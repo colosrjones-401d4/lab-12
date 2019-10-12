@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Auth Test</title>
+    </head>
+    <body>
+        <main>
+
+            <div id="oauth"></div>
+
+        </main>
+
+        <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+
+        <script>
+          let googleURL = "https://accounts.google.com/o/oauth2/v2/auth";
+          let githubURL = "https://github.com/login/oauth/authorize";
+          let options = {
+            client_id:'89641749592-6g8up10p7hu0ij6e0bacf7a7df2m8l8i.apps.googleusercontent.com',
+            redirect_uri: 'http://localhost:3000/oauth',
+            scope: 'email openid profile',
+            prompt: 'consent',
+            response_type: 'code'
+          };
+          let githubOptions = {
+            client_id:'1c4089367ae9037676b7',
+            redirect_uri: 'http://localhost:3000/gh-oauth',
+            scope: 'user user:email public_repo notifications',
+            allow_signup: true
+          };
+          let QueryString = Object.keys(options).map( (key,i) => {
+            return `${key}=` + encodeURIComponent(options[key]);
+          }).join("&");
+          let GitHubQueryString = Object.keys(githubOptions).map( (key,i) => {
+            return `${key}=` + encodeURIComponent(githubOptions[key]);
+          }).join("&");
+          let authURL = `${googleURL}?${QueryString}`;
+          let ghAuthURL = `${githubURL}?${GitHubQueryString};`
+          $('#oauth').append(`<a href="${authURL}">Login With Google</a>`);
+          $('#oauth').append(`<a href="${ghAuthURL}">Login With Github</a>`);
+        </script>
+
+
+    </body>
+</html>
